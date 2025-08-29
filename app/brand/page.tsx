@@ -97,9 +97,9 @@ export default function BrandPage() {
     };
 
     return (
-        <div className="min-h-screen bg-white relative justify-center items-center flex flex-col">
+        <div className="min-h-screen bg-white relative">
             {/* Header */}
-            <header className="absolute md:top-6 top-2 bg-white md:left-6 left-2 px-4 py-2 flex justify-between items-center z-10">
+            <header className="sticky top-0 bg-white md:left-6 left-2 px-4 py-4 flex justify-between items-center z-10 border-b border-gray-100">
                 <Link href="/" className="flex items-center gap-6">
                     <HugeiconsIcon icon={Menu02Icon} className="w-5 h-5" />
                     <Image src="/logo.svg" alt="Swiirl Pulse" width={60} height={60} />
@@ -107,7 +107,7 @@ export default function BrandPage() {
             </header>
 
             {/* Main Content */}
-            <div className="px-6 py-8 justify-center items-center w-full md:w-1/3 mx-auto" >
+            <div className="px-6 py-8 w-full md:w-1/3 md:mx-auto md:pt-20" >
                 {/* Back Button and Title */}
                 <div className="flex items-center gap-4 mb-2">
 
@@ -242,7 +242,7 @@ export default function BrandPage() {
                                             onKeyPress={handleSocialLinkKeyPress}
                                             className="pl-16 border-gray-300 rounded-lg"
                                             placeholder="linkedin.com/in/username"
-                                            required
+
                                         />
 
                                     </div>

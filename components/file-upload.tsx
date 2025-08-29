@@ -96,7 +96,7 @@ export function FileUpload({
             <div
                 className={cn(
                     "border-2 border-dashed rounded-lg p-6 text-center transition-colors cursor-pointer",
-                    "border-gray-300 hover:border-gray-400 hover:bg-gray-50",
+                    "border-gray-300 hover:border-gray-400 hover:bg-gray-100",
                     "bg-gray-50"
                 )}
                 onClick={handleClick}
