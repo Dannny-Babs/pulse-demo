@@ -71,7 +71,8 @@ export default function ChatPage() {
         { type: "swiirl", content: "Got it.\n\n And where would you like to focus first?", showMarkets: true },
         { type: "brand", content: "Atlanta, Phoenix, and San Antonio.", hideMarkets: true },
         { type: "swiirl", content: "Perfect.\n\n And what does success look like for you after these conversations?" },
-        { type: "brand", content: "We want to see how people in different communities set their financial priorities.\n\n We want to compare those with our current offerings.\n\n And we want insights to help us design a campaign that connects with what they care about most." },
+        { type: "brand", content: "We want to see how people in different communities set their financial priorities.\n\n We want to compare those with our current offerings." },
+        { type: "brand", content: "And we want insights to help us design a campaign that connects with what they care about most." },
         { type: "swiirl", content: "Great.\n\n \t\t Just to confirm, your agent will follow these ground rules.", showGuardrails: true },
         { type: "brand", content: "Yes, confirm.", hideGuardrails: true },
         { type: "swiirl", content: "Here's your Focus Brief. Feel free to ask me follow-up questions or request changes.", showFocusBrief: true },
@@ -395,8 +396,15 @@ export default function ChatPage() {
                                     animate={{ opacity: 1, y: 0, scale: 1 }}
                                     transition={{ type: "spring", stiffness: 200, damping: 25, delay: 0.1 }}
                                 >
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 15 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ type: "spring", stiffness: 250, damping: 20, delay: 0.2 }}
+                                    >
+                                        <Image src="/logo.svg" alt="Swiirl Pulse" width={60} height={20} className="w-10 pb-2" />
+                                    </motion.div>
                                     <motion.h3
-                                        className="text-2xl font-semibold text-[#6941C6]"
+                                        className="text-2xl font-semibold text-[#201340]"
                                         initial={{ opacity: 0, y: 15 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ type: "spring", stiffness: 250, damping: 20, delay: 0.2 }}
