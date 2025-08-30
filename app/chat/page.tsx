@@ -342,7 +342,7 @@ export default function ChatPage() {
                         {/* Focus Brief */}
                         {message.content.includes("Here's your Focus Brief") && showFocusBrief && (
                             <div className="mt-4 bg-white border border-gray-200 rounded-lg p-6 shadow-sm space-y-4 fade-in-up">
-                                <h3 className="text-2xl font-semibold" >
+                                <h3 className="text-2xl font-semibold text-[#6941C6]" >
                                     Focus Brief for {companyName || 'Your Brand'} Campaign Design
                                 </h3>
                                 <div className="space-y-3 text-sm font-normal" >
