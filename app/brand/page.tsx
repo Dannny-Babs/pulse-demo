@@ -20,17 +20,16 @@ export default function BrandPage() {
 
     // Profile form state
     const [profileData, setProfileData] = useState({
-        name: "",
-        company: "",
-        role: "",
-        department: "",
-
+        name: "Molly Hill",
+        company: "Bank of America",
+        role: "Brand Director",
+        department: "Marketing",
     });
 
     // Brand cortex form state
     const [brandData, setBrandData] = useState({
-        website: "swiirl.io",
-        socialLinks: "linkedin.com/company/swiirl",
+        website: "bankofamerica.com",
+        socialLinks: "linkedin.com/company/bankofamerica",
         brandGuidelines: null
     });
 

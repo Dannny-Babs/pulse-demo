@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("molly@bank.com");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 

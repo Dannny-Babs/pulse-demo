@@ -489,7 +489,7 @@ export default function CommunitiesPage() {
 
                                                                 <div className="flex items-center gap-2 mb-2">
                                                                     <HugeiconsIcon icon={UserIcon} className="w-4 h-4 text-gray-500" />
-                                                                    <p className="text-gray-500 text-sm">
+                                                                    <p className="text-sm text-gray-500">
                                                                         <strong className="font-semibold text-gray-600">Host: </strong>
                                                                         {group.host}
                                                                     </p>
@@ -505,7 +505,7 @@ export default function CommunitiesPage() {
                                                                     <div className="w-1 h-1  bg-gray-200 rounded-full" />
                                                                     <div className="flex items-center gap-2">
                                                                         <HugeiconsIcon icon={UserGroup03Icon} className="w-4 h-4 text-gray-500" />
-                                                                        <p className="text-gray-500 text-sm">
+                                                                        <p className="text-sm text-gray-500">
                                                                             <strong className="font-semibold text-gray-600">Attending Members: </strong>
                                                                             {group.memberCount} members
                                                                         </p>
@@ -554,20 +554,24 @@ export default function CommunitiesPage() {
                                                                 ))}
                                                             </div>
                                                         </div>
-
-
-
-                                                        <Button
-                                                            className="flex-1 bg-[#1b0f38] hover:bg-[#56477b] text-white w-full mt-4"
-                                                            onClick={() => router.push('/pricing')}
-                                                        >
-                                                            Join Group
-                                                        </Button>
                                                     </div>
                                                 </div>
                                             </motion.div>
                                         ))}
                                     </AnimatePresence>
+                                </div>
+
+                                {/* Join All Communities in this Pillar */}
+                                <div className="mt-6 text-center">
+                                    <Button
+                                        className="bg-[#1b0f38] hover:bg-[#56477b] text-white px-8 py-3 text-lg"
+                                        onClick={() => router.push('/pricing')}
+                                    >
+                                        Join All {pillar} Communities
+                                    </Button>
+                                    <p className="text-sm text-gray-500 mt-2">
+                                        Join {pillarGroups.length} communities focused on {pillar.toLowerCase()}
+                                    </p>
                                 </div>
                             </motion.div>
                         )

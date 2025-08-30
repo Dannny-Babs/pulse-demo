@@ -33,9 +33,9 @@ export default function BrandAgentPage() {
 
     // Agent persona - updated to match the screenshot
     const agentPersona: AgentPersona = {
-        name: "Mollie Hall",
+        name: "Molly Hill",
         role: `Brand voice for ${companyName || 'Swiirl'}`,
-        personality: "Friendly, knowledgeable, and empathetic financial advisor who speaks in clear, everyday language",
+        personality: "Friendly, knowledgeable, and empathetic financial advisor who speaks in clear, everyday language. She's passionate about helping people feel confident about their financial decisions and loves sharing insights from real community conversations.",
         avatar: "/image.png"
     }
 
@@ -61,7 +61,7 @@ export default function BrandAgentPage() {
             {
                 id: "2",
                 type: "agent",
-                content: "Would you be open to sharing why you don't feel ready?",
+                content: "That's a huge step! I've talked to so many people who feel exactly the same way. What's making you feel not quite ready?",
                 timestamp: new Date()
             }
         ]
@@ -87,7 +87,7 @@ export default function BrandAgentPage() {
         setMessages(prev => [...prev, participantMessage])
         setInputMessage("")
 
-        // Simulate AI response
+        // Simulate AI response with typing indicator
         setTimeout(() => {
             const aiResponse: Message = {
                 id: (Date.now() + 1).toString(),
@@ -96,19 +96,113 @@ export default function BrandAgentPage() {
                 timestamp: new Date(),
             }
             setMessages(prev => [...prev, aiResponse])
+
+            // Sometimes add a follow-up question to keep conversation flowing
+            if (Math.random() > 0.6) {
+                setTimeout(() => {
+                    const followUp: Message = {
+                        id: (Date.now() + 2).toString(),
+                        type: "agent",
+                        content: generateFollowUpQuestion(inputMessage),
+                        timestamp: new Date(),
+                    }
+                    setMessages(prev => [...prev, followUp])
+                }, 2000)
+            }
         }, 1000)
     }
 
     // Generate AI response based on input
     const generateAIResponse = (input: string): string => {
-        const responses = [
-            "That's a great question! Let me share what I've learned from our community conversations...",
-            "I'm glad you asked about that. Based on our research, people often feel...",
-            "That's exactly the kind of insight we're looking for. From what I've observed...",
-            "Interesting perspective! This reminds me of a conversation I had with someone who...",
-            "You're touching on something really important here. Let me break this down..."
+        const lowerInput = input.toLowerCase()
+
+        // Context-aware responses based on user input
+        if (lowerInput.includes('home') || lowerInput.includes('house') || lowerInput.includes('buy')) {
+            const homeResponses = [
+                "That's a huge step! I've talked to so many people who feel exactly the same way. What's making you feel not quite ready?",
+                "I hear this a lot from our community. Many people think they need perfect credit or a huge down payment, but there are actually several paths to homeownership.",
+                "This is exactly what I'm here to help with! I've learned from our conversations that people often underestimate what they can actually afford. What's your biggest concern?"
+            ]
+            return homeResponses[Math.floor(Math.random() * homeResponses.length)]
+        }
+
+        if (lowerInput.includes('credit') || lowerInput.includes('score') || lowerInput.includes('debt')) {
+            const creditResponses = [
+                "Credit can feel like this mysterious thing, right? I've found that most people just need to understand the basics. What's your current situation?",
+                "This is such a common concern! I've talked to people who thought they'd never qualify, but there are actually some great starter options.",
+                "You're not alone in feeling this way. From our community conversations, I've learned that building credit is more about consistency than perfection."
+            ]
+            return creditResponses[Math.floor(Math.random() * creditResponses.length)]
+        }
+
+        if (lowerInput.includes('budget') || lowerInput.includes('money') || lowerInput.includes('save')) {
+            const budgetResponses = [
+                "Budgeting can feel overwhelming at first, but I've learned from our community that small changes add up fast. What's your biggest challenge?",
+                "This is exactly what I'm passionate about! I've seen people transform their financial situation with just a few simple strategies.",
+                "You're asking the right questions! I've found that successful budgeters focus on their 'why' rather than just the numbers."
+            ]
+            return budgetResponses[Math.floor(Math.random() * budgetResponses.length)]
+        }
+
+        if (lowerInput.includes('ready') || lowerInput.includes('prepared') || lowerInput.includes('start')) {
+            const readyResponses = [
+                "I love that you're thinking about this! Many people wait for the 'perfect' moment, but I've learned that starting small is often the best approach.",
+                "This mindset is exactly what I see in successful people! They don't wait for everything to be perfect - they start where they are.",
+                "You're already ahead of the game by asking these questions! I've found that the people who succeed are the ones who prepare before they're ready."
+            ]
+            return readyResponses[Math.floor(Math.random() * readyResponses.length)]
+        }
+
+        // General conversational responses
+        const generalResponses = [
+            "That's really insightful! I've been having similar conversations with people in our community. What made you think about this?",
+            "I appreciate you sharing that. It helps me understand what people are really going through. Can you tell me more?",
+            "This is exactly the kind of real talk I'm here for. I've learned so much from listening to people's actual experiences.",
+            "That's a great point. I've noticed that people often feel this way, but there are usually some practical steps we can take.",
+            "I'm glad you brought this up. It's something I hear a lot, and I think there are some helpful perspectives I can share."
         ]
-        return responses[Math.floor(Math.random() * responses.length)]
+        return generalResponses[Math.floor(Math.random() * generalResponses.length)]
+    }
+
+    // Generate follow-up questions to keep conversation flowing
+    const generateFollowUpQuestion = (input: string): string => {
+        const lowerInput = input.toLowerCase()
+
+        if (lowerInput.includes('home') || lowerInput.includes('house')) {
+            const homeQuestions = [
+                "What's your biggest concern about being ready?",
+                "Have you thought about what kind of home you're looking for?",
+                "What would make you feel more confident about taking this step?"
+            ]
+            return homeQuestions[Math.floor(Math.random() * homeQuestions.length)]
+        }
+
+        if (lowerInput.includes('credit') || lowerInput.includes('debt')) {
+            const creditQuestions = [
+                "What's your current credit situation like?",
+                "Have you tried any credit-building strategies before?",
+                "What's the biggest obstacle you're facing with credit?"
+            ]
+            return creditQuestions[Math.floor(Math.random() * creditQuestions.length)]
+        }
+
+        if (lowerInput.includes('budget') || lowerInput.includes('money')) {
+            const budgetQuestions = [
+                "What's your biggest challenge with budgeting?",
+                "Have you tried any budgeting apps or methods?",
+                "What would success look like for you financially?"
+            ]
+            return budgetQuestions[Math.floor(Math.random() * budgetQuestions.length)]
+        }
+
+        // General follow-up questions
+        const generalQuestions = [
+            "Can you tell me more about that?",
+            "What's your biggest concern right now?",
+            "How do you feel about taking the next step?",
+            "What would be most helpful for you to know?"
+        ]
+        return generalQuestions[Math.floor(Math.random() * generalQuestions.length)]
     }
 
     // NOTE: For production, you'll need to integrate these APIs:
@@ -131,7 +225,7 @@ export default function BrandAgentPage() {
                 <div className="flex items-center gap-3">
                     <Link href="/dashboard" className="flex items-center  gap-2">
                         <HugeiconsIcon icon={ArrowLeftIcon} size={24} strokeWidth={2.5} className="text-gray-600" />
-                        <Image src="/avatar.png" alt="Mollie Hall Avatar" width={45} height={45} priority />
+                        <Image src="/avatar.png" alt="Molly Hill Avatar" width={45} height={45} priority />
                     </Link>
                     <div className="flex flex-col ">
                         <div className="flex items-center gap-2">
@@ -200,6 +294,55 @@ export default function BrandAgentPage() {
 
                 {/* Bottom ref for auto-scroll */}
                 <div ref={bottomRef} />
+
+                {/* Suggested conversation starters */}
+                {messages.length === 2 && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.5, duration: 0.6 }}
+                        className="mt-6 p-4 bg-gray-50 rounded-xl border border-gray-200"
+                    >
+                        <p className="text-sm text-gray-600 mb-3">Try asking about:</p>
+                        <div className="flex flex-wrap gap-2">
+                            {[
+                                "How do I start building credit?",
+                                "What's a realistic timeline for buying a home?",
+                                "How much should I save each month?",
+                                "What are the biggest mistakes to avoid?"
+                            ].map((suggestion, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => {
+                                        setInputMessage(suggestion)
+                                        // Simulate sending the message
+                                        const participantMessage: Message = {
+                                            id: Date.now().toString(),
+                                            type: "participant",
+                                            content: suggestion,
+                                            timestamp: new Date(),
+                                        }
+                                        setMessages(prev => [...prev, participantMessage])
+
+                                        // Generate AI response
+                                        setTimeout(() => {
+                                            const aiResponse: Message = {
+                                                id: (Date.now() + 1).toString(),
+                                                type: "agent",
+                                                content: generateAIResponse(suggestion),
+                                                timestamp: new Date(),
+                                            }
+                                            setMessages(prev => [...prev, aiResponse])
+                                        }, 1000)
+                                    }}
+                                    className="px-3 py-2 text-sm bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-colors"
+                                >
+                                    {suggestion}
+                                </button>
+                            ))}
+                        </div>
+                    </motion.div>
+                )}
             </div>
 
 
