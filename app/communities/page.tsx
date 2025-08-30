@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { Search01Icon, Menu02Icon, FilterIcon, LocationIcon, UserIcon, CalendarIcon, ClockIcon, CreditCardIcon, HomeIcon, DollarIcon } from "@hugeicons/core-free-icons"
+import { Search01Icon, Menu02Icon, FilterIcon, LocationIcon, UserIcon, CalendarIcon, ClockIcon, CreditCardIcon, HomeIcon, DollarIcon, UserGroup03Icon } from "@hugeicons/core-free-icons"
 import { motion, AnimatePresence } from "framer-motion"
 import { useBrandData } from "@/lib/hooks/useBrandData"
 interface CommunityGroup {
@@ -50,14 +50,14 @@ export default function CommunitiesPage() {
         // Credit Building Groups
         {
             id: "1",
-            name: "Atlanta Credit Builders Alliance",
+            name: "Better Budgeting Workshop",
             location: "Atlanta, GA",
             memberCount: 47,
             focus: ["Credit Building", "Financial Education", "Debt Management"],
             description: "A supportive community focused on building strong credit scores and achieving financial independence.",
             matchScore: 98,
             status: "available",
-            image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=300&fit=crop",
+            image: "https://images.unsplash.com/photo-1538688423619-a81d3f23454b?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             host: "Maya R. (Group Admin)",
             meetingDate: "Every Tuesday",
             meetingTime: "7:00 PM EST",
@@ -65,14 +65,14 @@ export default function CommunitiesPage() {
         },
         {
             id: "2",
-            name: "Phoenix Credit Warriors",
+            name: "Planning Your Financial Future",
             location: "Phoenix, AZ",
             memberCount: 32,
             focus: ["Credit Building", "Budgeting", "Financial Planning"],
             description: "Empowering individuals to rebuild and strengthen their credit through education and support.",
             matchScore: 95,
             status: "available",
-            image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop",
+            image: "https://images.unsplash.com/photo-1730094915697-bd504b857145?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             host: "Sarah K. (Group Admin)",
             meetingDate: "Every Thursday",
             meetingTime: "6:30 PM MST",
@@ -80,14 +80,14 @@ export default function CommunitiesPage() {
         },
         {
             id: "3",
-            name: "San Antonio Credit Champions",
+            name: "Buying a Home — Tips",
             location: "San Antonio, TX",
             memberCount: 28,
             focus: ["Credit Building", "Debt Management", "Financial Literacy"],
             description: "Building credit scores and financial confidence through community support and education.",
             matchScore: 92,
             status: "available",
-            image: "https://images.unsplash.com/photo-1554224154-26032cdc0c0f?w=400&h=300&fit=crop",
+            image: "https://images.unsplash.com/photo-1579621970795-87facc2f976d?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             host: "Carlos M. (Group Admin)",
             meetingDate: "Every Wednesday",
             meetingTime: "7:00 PM CST",
@@ -95,7 +95,7 @@ export default function CommunitiesPage() {
         },
         {
             id: "4",
-            name: "Atlanta Credit Masters",
+            name: "Smart Saving Strategies",
             location: "Atlanta, GA",
             memberCount: 35,
             focus: ["Credit Building", "Investment", "Wealth Building"],
@@ -110,7 +110,7 @@ export default function CommunitiesPage() {
         },
         {
             id: "5",
-            name: "Phoenix Credit Builders Network",
+            name: "Building Your Credit Score",
             location: "Phoenix, AZ",
             memberCount: 41,
             focus: ["Credit Building", "Home Savings", "Financial Freedom"],
@@ -127,14 +127,14 @@ export default function CommunitiesPage() {
         // Home Savings Groups
         {
             id: "6",
-            name: "Atlanta Dream Home Savers",
+            name: "Home Savings Strategies",
             location: "Atlanta, GA",
             memberCount: 52,
             focus: ["Home Savings", "Real Estate", "Investment"],
             description: "Saving strategies and real estate insights to achieve the dream of homeownership.",
             matchScore: 96,
             status: "available",
-            image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=300&fit=crop",
+            image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1673&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             host: "David P. (Group Admin)",
             meetingDate: "Every Monday",
             meetingTime: "6:00 PM EST",
@@ -142,14 +142,14 @@ export default function CommunitiesPage() {
         },
         {
             id: "7",
-            name: "Phoenix Home Sweet Home",
+            name: "Saving for a Home",
             location: "Phoenix, AZ",
             memberCount: 38,
             focus: ["Home Savings", "Budgeting", "Financial Planning"],
             description: "Smart saving strategies and budgeting techniques for first-time homebuyers.",
             matchScore: 94,
             status: "available",
-            image: "https://images.unsplash.com/photo-1560518883-8d04cb21cd6f?w=400&h=300&fit=crop",
+            image: "https://images.unsplash.com/photo-1624953901718-e24ee7200b85?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             host: "Lisa W. (Group Admin)",
             meetingDate: "Every Friday",
             meetingTime: "7:00 PM MST",
@@ -157,14 +157,14 @@ export default function CommunitiesPage() {
         },
         {
             id: "8",
-            name: "San Antonio Home Savers Club",
+            name: "Home Savings Club",
             location: "San Antonio, TX",
             memberCount: 31,
             focus: ["Home Savings", "Credit Building", "Real Estate"],
             description: "Building savings and credit to unlock the door to homeownership in San Antonio.",
             matchScore: 91,
             status: "available",
-            image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=300&fit=crop",
+            image: "https://images.unsplash.com/photo-1733897669171-e7cf3712cced?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             host: "Maria G. (Group Admin)",
             meetingDate: "Every Tuesday",
             meetingTime: "6:30 PM CST",
@@ -172,7 +172,7 @@ export default function CommunitiesPage() {
         },
         {
             id: "9",
-            name: "Atlanta First-Time Buyers",
+            name: "First-Time Homebuyer Workshop",
             location: "Atlanta, GA",
             memberCount: 45,
             focus: ["Home Savings", "Real Estate Education", "Financial Planning"],
@@ -187,7 +187,7 @@ export default function CommunitiesPage() {
         },
         {
             id: "10",
-            name: "Phoenix Real Estate Savers",
+            name: "Real Estate Savings Group",
             location: "Phoenix, AZ",
             memberCount: 29,
             focus: ["Home Savings", "Investment", "Market Analysis"],
@@ -204,14 +204,14 @@ export default function CommunitiesPage() {
         // Budgeting Groups
         {
             id: "11",
-            name: "Atlanta Budget Masters",
+            name: "Budgeting Basics Workshop",
             location: "Atlanta, GA",
             memberCount: 63,
             focus: ["Budgeting", "Financial Planning", "Debt Management"],
             description: "Mastering the art of budgeting for financial freedom and long-term success.",
             matchScore: 97,
             status: "available",
-            image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=300&fit=crop",
+            image: "https://images.unsplash.com/photo-1711606815631-38d32cdaec3e?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             host: "Thomas B. (Group Admin)",
             meetingDate: "Every Wednesday",
             meetingTime: "6:00 PM EST",
@@ -219,14 +219,14 @@ export default function CommunitiesPage() {
         },
         {
             id: "12",
-            name: "Phoenix Budget Builders",
+            name: "Budgeting and Debt Management",
             location: "Phoenix, AZ",
             memberCount: 41,
             focus: ["Budgeting", "Credit Building", "Financial Education"],
             description: "Building sustainable budgets that lead to financial stability and growth.",
             matchScore: 93,
             status: "available",
-            image: "https://images.unsplash.com/photo-1554224154-b33ff0c44a43?w=400&h=300&fit=crop",
+            image: "https://images.unsplash.com/photo-1725258080098-727051947997?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             host: "Rachel S. (Group Admin)",
             meetingDate: "Every Monday",
             meetingTime: "6:30 PM MST",
@@ -234,14 +234,14 @@ export default function CommunitiesPage() {
         },
         {
             id: "13",
-            name: "San Antonio Budget Champions",
+            name: "Budgeting My Way",
             location: "San Antonio, TX",
             memberCount: 34,
             focus: ["Budgeting", "Home Savings", "Financial Wellness"],
             description: "Championing financial wellness through effective budgeting and smart money management.",
             matchScore: 90,
             status: "available",
-            image: "https://images.unsplash.com/photo-1554224154-26032cdc0c0f?w=400&h=300&fit=crop",
+            image: "https://images.unsplash.com/photo-1713947506242-8fcae733d158?q=80&w=2532&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             host: "Daniel R. (Group Admin)",
             meetingDate: "Every Friday",
             meetingTime: "6:00 PM CST",
@@ -249,14 +249,14 @@ export default function CommunitiesPage() {
         },
         {
             id: "14",
-            name: "Atlanta Financial Freedom Budgeters",
+            name: "Financial Freedom Budgeters",
             location: "Atlanta, GA",
             memberCount: 48,
             focus: ["Budgeting", "Investment", "Wealth Building"],
             description: "Budgeting strategies that create pathways to financial freedom and wealth building.",
             matchScore: 86,
             status: "available",
-            image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6f?w=400&h=300&fit=crop",
+            image: "https://images.unsplash.com/photo-1724610055124-23f89198a8b5?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             host: "Nicole C. (Group Admin)",
             meetingDate: "Every Sunday",
             meetingTime: "3:00 PM EST",
@@ -264,14 +264,14 @@ export default function CommunitiesPage() {
         },
         {
             id: "15",
-            name: "Phoenix Smart Money Managers",
+            name: "Smart Money Managers",
             location: "Phoenix, AZ",
             memberCount: 36,
             focus: ["Budgeting", "Real Estate", "Financial Planning"],
             description: "Smart money management techniques for achieving financial goals and homeownership.",
             matchScore: 84,
             status: "available",
-            image: "https://images.unsplash.com/photo-1554224154-8d04cb21cd6f?w=400&h=300&fit=crop",
+            image: "https://images.unsplash.com/photo-1633158829585-23ba8f7c8caf?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             host: "Kevin J. (Group Admin)",
             meetingDate: "Every Thursday",
             meetingTime: "6:00 PM MST",
@@ -504,7 +504,7 @@ export default function CommunitiesPage() {
                                                                     </div>
                                                                     <div className="w-1 h-1  bg-gray-200 rounded-full" />
                                                                     <div className="flex items-center gap-2">
-                                                                        <HugeiconsIcon icon={UserIcon} className="w-4 h-4 text-gray-500" />
+                                                                        <HugeiconsIcon icon={UserGroup03Icon} className="w-4 h-4 text-gray-500" />
                                                                         <p className="text-gray-500 text-sm">
                                                                             <strong className="font-semibold text-gray-600">Attending Members: </strong>
                                                                             {group.memberCount} members

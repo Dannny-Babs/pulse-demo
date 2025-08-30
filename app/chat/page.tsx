@@ -441,12 +441,7 @@ export default function ChatPage() {
                                         <Button
                                             onClick={handleSeeCommunities}
                                             className="w-full text-white py-3"
-                                            style={{
-                                                fontFamily: "Inter",
-                                                fontWeight: "300",
-                                                backgroundColor: "#0C111D",
-                                                borderRadius: "8px",
-                                            }}
+                                           
                                         >
                                             See 186 Groups →
                                         </Button>
