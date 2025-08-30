@@ -4,12 +4,12 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
-import { Input } from "@/components/ui/input"
 import { ChatInput } from "@/components/chat-input"
 import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Menu02Icon } from "@hugeicons/core-free-icons";
 import { useBrandData } from "@/lib/hooks/useBrandData";
+import { motion, AnimatePresence } from "framer-motion";
 
 
 interface Message {
@@ -31,7 +31,6 @@ export default function ChatPage() {
     const [messages, setMessages] = useState<Message[]>([])
     const [currentBubble, setCurrentBubble] = useState(0)
     const [isTyping, setIsTyping] = useState(false)
-    const [inputMessage, setInputMessage] = useState("")
     const [selectedTopics, setSelectedTopics] = useState<ChipOption[]>([
         { id: "credit", label: "Building credit?", selected: false },
         { id: "home", label: "Saving for a home?", selected: false },
@@ -55,7 +54,6 @@ export default function ChatPage() {
     const [waitingForMarketSelection, setWaitingForMarketSelection] = useState(false)
     const [topicContinueClicked, setTopicContinueClicked] = useState(false)
     const [marketContinueClicked, setMarketContinueClicked] = useState(false)
-    const [guardrailContinueClicked, setGuardrailContinueClicked] = useState(false)
 
     const conversationScript = [
         { type: "swiirl", content: `Welcome! I'll help ${companyName || 'your brand'} join real community conversations.\n\nTo start, what would you like to learn more about?` },
@@ -171,21 +169,12 @@ export default function ChatPage() {
     }
 
     const continueAfterGuardrails = () => {
-        setGuardrailContinueClicked(true)
         setWaitingForMarketSelection(false)
     }
 
-    const handleSendMessage = () => {
-        if (inputMessage.trim()) {
-            addMessage("brand", inputMessage.trim())
-            setInputMessage("")
-        }
-    }
-
-    const handleKeyPress = (e: React.KeyboardEvent) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault()
-            handleSendMessage()
+    const handleSendMessage = (message: string) => {
+        if (message.trim()) {
+            addMessage("brand", message.trim())
         }
     }
 
@@ -193,9 +182,6 @@ export default function ChatPage() {
         router.push("/communities")
     }
 
-    const handleBack = () => {
-        router.back()
-    }
 
     return (
         <div className="min-h-screen bg-white flex flex-col">
@@ -209,188 +195,263 @@ export default function ChatPage() {
             </header>
 
             {/* Chat Container */}
-            <div className="flex-1 px-4 py-6 space-y-6 max-w-2xl mx-auto overflow-y-auto">
-                {messages.map((message, index) => (
-                    <div key={message.id}>
-                        <div className={`flex ${message.type === "brand" ? "justify-end" : "justify-start"}`}>
-                            <div className="max-w-[80%]">
-                                {/* Label */}
-                                <div
-                                    className={`text-xs mb-1 flex items-center ${message.type === "swiirl" ? "text-[#101828] justify-start" : "text-[#101828] justify-end"
-                                        }`}
+            <div className="flex-1 px-4 pt-6 pb-16 space-y-6 max-w-2xl mx-auto overflow-y-auto">
+                <AnimatePresence>
+                    {messages.map((message, index) => (
+                        <motion.div
+                            key={message.id}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ type: "spring", stiffness: 150, damping: 20, delay: index * 0.05 }}
+                        >
+                            <div className={`flex ${message.type === "brand" ? "justify-end" : "justify-start"}`}>
+                                <div className="max-w-[80%]">
+                                    {/* Label */}
+                                    <div
+                                        className={`text-xs mb-1 flex items-center ${message.type === "swiirl" ? "text-[#101828] justify-start" : "text-[#101828] justify-end"
+                                            }`}
 
-                                >
-                                    {message.type === "swiirl" ? (
-                                        <div className="flex items-end gap-1">
-                                            <div className="w-7 h-7 bg-purple-200 border border-purple-300 rounded-full flex items-center justify-center">
-                                                <Image src="/image.png" alt="S" width={20} height={20} className="w-5 h-5" />
+                                    >
+                                        {message.type === "swiirl" ? (
+                                            <div className="flex items-end gap-1">
+                                                <div className="w-7 h-7 bg-purple-200 border border-purple-300 rounded-full flex items-center justify-center">
+                                                    <Image src="/image.png" alt="S" width={20} height={20} className="w-5 h-5" />
+                                                </div>
+                                                <span className="text-sm font-medium tracking-tight">Swiirl AI</span>
                                             </div>
-                                            <span className="text-sm font-medium tracking-tight">Swiirl AI</span>
+                                        ) : (
+                                            ""
+                                        )}
+                                    </div>
+
+                                    {message.type === "swiirl" ? (
+                                        // No bubble for Swiirl messages
+                                        <div className="text-[#101828] text-sm mt-4">
+                                            {message.content.split('\n').map((line, lineIndex) => (
+                                                <motion.div
+                                                    key={lineIndex}
+                                                    initial={{ opacity: 0, y: 10 }}
+                                                    animate={{ opacity: 1, y: 0 }}
+                                                    transition={{
+                                                        type: "spring",
+                                                        stiffness: 200,
+                                                        damping: 25,
+                                                        delay: 0.1 + lineIndex * 0.03
+                                                    }}
+                                                >
+                                                    {line || '\u00A0'}
+                                                </motion.div>
+                                            ))}
                                         </div>
                                     ) : (
-                                        ""
+                                        // Light gradient bubble for Brand messages
+                                        <div
+                                            className={`rounded-tl-[18px] rounded-br-[18px] rounded-bl-[18px] px-4 py-3 bg-gray-100 border border-gray-200 pop-in text-sm `}
+
+                                        >
+                                            {message.content}
+                                        </div>
                                     )}
                                 </div>
+                            </div>
 
-                                {message.type === "swiirl" ? (
-                                    // No bubble for Swiirl messages
-                                    <div
-                                        className={`text-[#101828] text-sm mt-4 ${message.isTyping ? "typewriter" : "pop-in"}`}
-
+                            {/* Topic Selection */}
+                            {message.content.includes("When you say financial future") &&
+                                (showTopicSelection || topicContinueClicked) && (
+                                    <motion.div
+                                        className="mt-4 space-y-3"
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ type: "spring", stiffness: 200, damping: 25, delay: 0.1 }}
                                     >
-                                        {message.content}
-                                        {message.isTyping && <span className="cursor ml-1 animate-pulse">|</span>}
-                                    </div>
-                                ) : (
-                                    // Light gradient bubble for Brand messages
-                                    <div
-                                        className={`rounded-tl-[18px] rounded-br-[18px] rounded-bl-[18px] px-4 py-3 bg-gray-100 border border-gray-200 pop-in text-sm `}
-
-                                    >
-                                        {message.content}
-                                    </div>
+                                        <div className="flex flex-wrap gap-2">
+                                            {selectedTopics.map((topic, index) => (
+                                                <motion.button
+                                                    key={topic.id}
+                                                    onClick={() => handleTopicSelect(topic.id)}
+                                                    className={`px-4 py-1 rounded-full text-sm transition-all ${topic.selected ? "text-white bg-[#6941C6] hover:bg-[#56477b]" : "text-[#6941C6] hover:bg-[#D6BBFB] bg-[#F9F5FF] border border-purple-300"
+                                                        }`}
+                                                    disabled={topicContinueClicked}
+                                                    whileHover={{ scale: 1.05 }}
+                                                    whileTap={{ scale: 0.95 }}
+                                                    initial={{ opacity: 0, y: 15, scale: 0.9 }}
+                                                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                                                    transition={{ type: "spring", stiffness: 250, damping: 20, delay: 0.15 + index * 0.04 }}
+                                                >
+                                                    {topic.label}
+                                                </motion.button>
+                                            ))}
+                                        </div>
+                                        {!topicContinueClicked && (
+                                            <motion.div
+                                                className="flex justify-end mt-8 pr-4"
+                                                initial={{ opacity: 0, y: 15 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                transition={{ type: "spring", stiffness: 200, damping: 25, delay: 0.3 }}
+                                            >
+                                                <Button
+                                                    onClick={continueAfterTopics}
+                                                    className={`px-6 py-2 rounded-lg transition-all bg-gray-100 border border-gray-200 shadow-none text-[#101828] hover:bg-gray-200 hover:border-gray-300 hover:text-gray-500 focus:text-white`}
+                                                >
+                                                    Continue
+                                                </Button>
+                                            </motion.div>
+                                        )}
+                                    </motion.div>
                                 )}
-                            </div>
-                        </div>
 
-                        {/* Topic Selection */}
-                        {message.content.includes("When you say financial future") &&
-                            (showTopicSelection || topicContinueClicked) && (
-                                <div className="mt-4 space-y-3 fade-in-up">
-                                    <div className="flex flex-wrap gap-2">
-                                        {selectedTopics.map((topic) => (
-                                            <button
-                                                key={topic.id}
-                                                onClick={() => handleTopicSelect(topic.id)}
-                                                className={`px-4 py-1 rounded-full text-sm transition-all ${topic.selected ? "text-white bg-[#6941C6] hover:bg-[#56477b]" : "text-[#6941C6] hover:bg-[#D6BBFB] bg-[#F9F5FF] border border-purple-300"
-                                                    }`}
-
-                                                disabled={topicContinueClicked}
-                                            >
-                                                {topic.label}
-                                            </button>
-                                        ))}
-                                    </div>
-                                    {!topicContinueClicked && (
-                                        <div className="flex justify-end mt-8 pr-4">
-                                            <Button
-                                                onClick={continueAfterTopics}
-                                                className={`px-6 py-2 rounded-lg transition-all bg-gray-100 border border-gray-200 shadow-none text-[#101828] hover:bg-gray-200 hover:border-gray-300 hover:text-gray-500 focus:text-white`}
-
-                                            >
-                                                Continue
-                                            </Button>
-                                        </div>
-                                    )}
-                                </div>
-                            )}
-
-                        {/* Market Selection */}
-                        {message.content.includes("where would you like to focus") &&
-                            (showMarketSelection || marketContinueClicked) && (
-                                <div className="mt-4 space-y-3 fade-in-up">
-                                    <div className="flex flex-wrap gap-2">
-                                        {selectedMarkets.map((market) => (
-                                            <button
-                                                key={market.id}
-                                                onClick={() => handleMarketSelect(market.id)}
-                                                className={`px-4 py-1 rounded-full text-sm transition-all ${market.selected ? "text-white bg-[#6941C6] hover:bg-[#56477b]" : "text-[#6941C6] hover:bg-[#D6BBFB] bg-[#F9F5FF] border border-purple-300"
-                                                    }`}
-                                                disabled={marketContinueClicked}
-                                            >
-                                                {market.label}
-                                            </button>
-                                        ))}
-                                    </div>
-                                    {!marketContinueClicked && (
-                                        <div className="flex justify-end mt-8 pr-4">
-                                            <Button
-                                                onClick={continueAfterMarkets}
-                                                className={"px-6 py-2 rounded-lg transition-all bg-gray-100 border border-gray-200 shadow-none text-[#101828] hover:bg-gray-200 hover:border-gray-300 hover:text-gray-500 focus:text-white"}
-                                            >
-                                                Continue
-                                            </Button>
-                                        </div>
-                                    )}
-                                </div>
-                            )}
-
-                        {/* Guardrails */}
-                        {message.content.includes("ground rules") && showGuardrails && (
-                            <div className="mt-4 space-y-3  fade-in-up">
-                                <div className="space-y-3 text-sm max-w-[80%]">
-                                    <div className="p-3 bg-gray-50 rounded-lg">
-                                        No personal financial advice — only general information.
-                                    </div>
-                                    <div className="p-3 bg-gray-50 rounded-lg">Clear, simple, everyday language.</div>
-                                    <div className="p-3 bg-gray-50 rounded-lg">
-                                        Conversations are consent-only, and private details are never stored.
-                                    </div>
-                                </div>
-                                <div className="flex justify-end mt-8 pr-4">
-                                    <Button
-                                        onClick={continueAfterGuardrails}
-                                        className={"px-6 py-2 rounded-lg transition-all bg-gray-100 border border-gray-200 shadow-none text-[#101828] hover:bg-gray-200 hover:border-gray-300 hover:text-gray-500 focus:text-white"}
-
+                            {/* Market Selection */}
+                            {message.content.includes("where would you like to focus") &&
+                                (showMarketSelection || marketContinueClicked) && (
+                                    <motion.div
+                                        className="mt-4 space-y-3"
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ type: "spring", stiffness: 200, damping: 25, delay: 0.1 }}
                                     >
-                                        Agree and Continue
-                                    </Button>
-                                </div>
-                            </div>
-                        )}
+                                        <div className="flex flex-wrap gap-2">
+                                            {selectedMarkets.map((market, index) => (
+                                                <motion.button
+                                                    key={market.id}
+                                                    onClick={() => handleMarketSelect(market.id)}
+                                                    className={`px-4 py-1 rounded-full text-sm transition-all ${market.selected ? "text-white bg-[#6941C6] hover:bg-[#56477b]" : "text-[#6941C6] hover:bg-[#D6BBFB] bg-[#F9F5FF] border border-purple-300"
+                                                        }`}
+                                                    disabled={marketContinueClicked}
+                                                    whileHover={{ scale: 1.05 }}
+                                                    whileTap={{ scale: 0.95 }}
+                                                    initial={{ opacity: 0, y: 15, scale: 0.9 }}
+                                                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                                                    transition={{ type: "spring", stiffness: 250, damping: 20, delay: 0.15 + index * 0.04 }}
+                                                >
+                                                    {market.label}
+                                                </motion.button>
+                                            ))}
+                                        </div>
+                                        {!marketContinueClicked && (
+                                            <motion.div
+                                                className="flex justify-end mt-8 pr-4"
+                                                initial={{ opacity: 0, y: 15 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                transition={{ type: "spring", stiffness: 200, damping: 25, delay: 0.3 }}
+                                            >
+                                                <Button
+                                                    onClick={continueAfterMarkets}
+                                                    className={"px-6 py-2 rounded-lg transition-all bg-gray-100 border border-gray-200 shadow-none text-[#101828] hover:bg-gray-200 hover:border-gray-300 hover:text-gray-500 focus:text-white"}
+                                                >
+                                                    Continue
+                                                </Button>
+                                            </motion.div>
+                                        )}
+                                    </motion.div>
+                                )}
 
-                        {/* Focus Brief */}
-                        {message.content.includes("Here's your Focus Brief") && showFocusBrief && (
-                            <div className="mt-4 bg-white border border-gray-200 rounded-lg p-6 shadow-sm space-y-4 fade-in-up">
-                                <h3 className="text-2xl font-semibold text-[#6941C6]" >
-                                    Focus Brief for {companyName || 'Your Brand'} Campaign Design
-                                </h3>
-                                <div className="space-y-3 text-sm font-normal" >
-                                    <div className="pb-4 border-b border-gray-200">
-                                        <strong>Topic:</strong> Financial Progress
-                                    </div>
-                                    <div className="pb-4 border-b border-gray-200">
-                                        <strong>Pillars:</strong> Credit building, Home savings, Budgeting
-                                    </div>
-                                    <div className="pb-4 border-b border-gray-200"      >
-                                        <strong>Markets:</strong> Atlanta, Phoenix, San Antonio
-                                    </div>
-                                    <div className="pb-4 border-b border-gray-200">
-                                        <strong>Goals:</strong> Understand community priorities and shape a relevant campaign
-                                    </div>
-                                    <div className="pb-4 border-b border-gray-200">
-                                        <strong>Safety:</strong> No personal advice, plain language, consent-only conversations
-                                    </div>
-                                    <div className="pb-4 border-b border-gray-200">
-                                        <strong>Value to Communities:</strong> Micro-grants + coaching hours
-                                    </div>
-                                    <div className="pb-4 border-b border-gray-200">
-                                        <strong>Budget:</strong> $50,000
-                                    </div>
-                                    <div className="pb-4 border-b border-gray-200">
-                                        <strong>Files Uploaded:</strong> {fileCount} document{fileCount !== 1 ? 's' : ''}
-                                    </div>
-                                </div>
-                                <Button
-                                    onClick={handleSeeCommunities}
-                                    className="w-full text-white py-3"
-                                    style={{
-                                        fontFamily: "Inter",
-                                        fontWeight: "300",
-                                        backgroundColor: "#0C111D",
-                                        borderRadius: "8px",
-                                    }}
+                            {/* Guardrails */}
+                            {message.content.includes("ground rules") && showGuardrails && (
+                                <motion.div
+                                    className="mt-4 space-y-3"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ type: "spring", stiffness: 200, damping: 25, delay: 0.1 }}
                                 >
-                                    See 186 Groups →
-                                </Button>
-                            </div>
-                        )}
-                    </div>
-                ))}
+                                    <div className="space-y-3 text-sm max-w-[80%]">
+                                        {[
+                                            "No personal financial advice — only general information.",
+                                            "Clear, simple, everyday language.",
+                                            "Conversations are consent-only, and private details are never stored."
+                                        ].map((rule, index) => (
+                                            <motion.div
+                                                key={index}
+                                                className="p-3 bg-gray-50 rounded-lg"
+                                                initial={{ opacity: 0, y: 15 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                transition={{ type: "spring", stiffness: 250, damping: 20, delay: 0.15 + index * 0.05 }}
+                                            >
+                                                {rule}
+                                            </motion.div>
+                                        ))}
+                                    </div>
+                                    <motion.div
+                                        className="flex justify-end mt-8 pr-4"
+                                        initial={{ opacity: 0, y: 15 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ type: "spring", stiffness: 200, damping: 25, delay: 0.3 }}
+                                    >
+                                        <Button
+                                            onClick={continueAfterGuardrails}
+                                            className={"px-6 py-2 rounded-lg transition-all bg-gray-100 border border-gray-200 shadow-none text-[#101828] hover:bg-gray-200 hover:border-gray-300 hover:text-gray-500 focus:text-white"}
+                                        >
+                                            Agree and Continue
+                                        </Button>
+                                    </motion.div>
+                                </motion.div>
+                            )}
+
+                            {/* Focus Brief */}
+                            {message.content.includes("Here's your Focus Brief") && showFocusBrief && (
+                                <motion.div
+                                    className="mt-4 bg-white border border-gray-200 rounded-lg p-6 shadow-sm space-y-4"
+                                    initial={{ opacity: 0, y: 25, scale: 0.95 }}
+                                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                                    transition={{ type: "spring", stiffness: 200, damping: 25, delay: 0.1 }}
+                                >
+                                    <motion.h3
+                                        className="text-2xl font-semibold text-[#6941C6]"
+                                        initial={{ opacity: 0, y: 15 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ type: "spring", stiffness: 250, damping: 20, delay: 0.2 }}
+                                    >
+                                        Focus Brief for {companyName || 'Your Brand'} Campaign Design
+                                    </motion.h3>
+                                    <div className="space-y-3 text-sm font-normal">
+                                        {[
+                                            { label: "Topic", value: "Financial Progress" },
+                                            { label: "Pillars", value: "Credit building, Home savings, Budgeting" },
+                                            { label: "Markets", value: "Atlanta, Phoenix, San Antonio" },
+                                            { label: "Goals", value: "Understand community priorities and shape a relevant campaign" },
+                                            { label: "Safety", value: "No personal advice, plain language, consent-only conversations" },
+                                            { label: "Value to Communities", value: "Micro-grants + coaching hours" },
+                                            { label: "Budget", value: "$50,000" },
+                                            { label: "Files Uploaded", value: `${fileCount} document${fileCount !== 1 ? 's' : ''}` }
+                                        ].map((item, index) => (
+                                            <motion.div
+                                                key={index}
+                                                className="pb-4 border-b border-gray-200"
+                                                initial={{ opacity: 0, y: 15 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                transition={{ type: "spring", stiffness: 250, damping: 20, delay: 0.25 + index * 0.04 }}
+                                            >
+                                                <strong>{item.label}:</strong> {item.value}
+                                            </motion.div>
+                                        ))}
+                                    </div>
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 15 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ type: "spring", stiffness: 200, damping: 25, delay: 0.5 }}
+                                    >
+                                        <Button
+                                            onClick={handleSeeCommunities}
+                                            className="w-full text-white py-3"
+                                            style={{
+                                                fontFamily: "Inter",
+                                                fontWeight: "300",
+                                                backgroundColor: "#0C111D",
+                                                borderRadius: "8px",
+                                            }}
+                                        >
+                                            See 186 Groups →
+                                        </Button>
+                                    </motion.div>
+                                </motion.div>
+                            )}
+                        </motion.div>
+                    ))}
+                </AnimatePresence>
             </div>
 
             {/* Chat Input */}
-            <ChatInput onSendMessage={handleSendMessage} />
+            <ChatInput onSendMessage={handleSendMessage} fileCount={fileCount} />
         </div>
     )
 }

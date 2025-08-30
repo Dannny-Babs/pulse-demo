@@ -1,13 +1,15 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
+import { motion } from 'framer-motion'
 
 interface ChatInputProps {
     onSendMessage: (message: string) => void
     disabled?: boolean
+    fileCount?: number
 }
 
-export function ChatInput({ onSendMessage, disabled = false }: ChatInputProps) {
+export function ChatInput({ onSendMessage, disabled = false, fileCount = 0 }: ChatInputProps) {
     const [inputMessage, setInputMessage] = useState('')
     const textareaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -43,9 +45,18 @@ export function ChatInput({ onSendMessage, disabled = false }: ChatInputProps) {
     }
 
     return (
-        <div className="sticky bottom-0 flex gap-2 px-4 pb-4 mx-auto w-full bg-background md:pb-6 md:max-w-2xl z-[1] border-t-0">
+        <motion.div
+            className="sticky bottom-0 flex gap-2 px-4 pb-4 mx-auto w-full bg-background md:pb-6 md:max-w-2xl z-[1] border-t-0"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+        >
             <div className="flex relative flex-col gap-4 w-full">
-                <form className="w-full overflow-hidden rounded-xl bg-background border-[1.5px] border-gray-200 shadow-xs transition-all duration-200 shadow-black/5 hover:border-primary/20 focus-within:border-primary/10 focus-within:shadow focus-within:shadow-primary/10">
+                <motion.form
+                    className="w-full overflow-hidden rounded-xl bg-background border-[1.5px] border-gray-200 shadow-xs transition-all duration-200 shadow-black/5 hover:border-primary/20 focus-within:border-primary/10 focus-within:shadow focus-within:shadow-primary/10"
+                    whileHover={{ y: -2 }}
+                    transition={{ duration: 0.2 }}
+                >
                     <textarea
                         ref={textareaRef}
                         className="flex min-h-[60px] border border-input ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm w-full rounded-none border-none p-3  outline-none ring-0 field-sizing-fixed bg-transparent dark:bg-transparent focus-visible:ring-0 text-sm resize-none py-1 px-3 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
@@ -62,24 +73,29 @@ export function ChatInput({ onSendMessage, disabled = false }: ChatInputProps) {
                     <div className="flex items-center justify-between p-1 px-2 py-1">
                         <div className="flex items-center [&_button:first-child]:rounded-bl-xl gap-2">
                             <p className="text-sm text-gray-500">
-                                4/5 Attachments
+                                {fileCount}/5 Attachments
                             </p>
                         </div>
-                        <button
+                        <motion.button
                             className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 px-3 gap-1.5 rounded-lg bg-primary hover:bg-primary/90 text-primary-foreground size-8"
                             type="submit"
                             disabled={!inputMessage.trim() || disabled}
                             onClick={handleSendMessage}
                             aria-label="Send message"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.2 }}
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-send size-4">
                                 <path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"></path>
                                 <path d="m21.854 2.147-10.94 10.939"></path>
                             </svg>
-                        </button>
+                        </motion.button>
                     </div>
-                </form>
+                </motion.form>
             </div>
-        </div>
+        </motion.div>
     )
 }
