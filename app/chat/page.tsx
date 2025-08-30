@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useMemo } from "react"
+import { useState, useEffect, useMemo, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
@@ -31,6 +31,7 @@ export default function ChatPage() {
     const [messages, setMessages] = useState<Message[]>([])
     const [currentBubble, setCurrentBubble] = useState(0)
     const [isTyping, setIsTyping] = useState(false)
+    const chatContainerRef = useRef<HTMLDivElement>(null)
     const [selectedTopics, setSelectedTopics] = useState<ChipOption[]>([
         { id: "credit", label: "Building credit?", selected: false },
         { id: "home", label: "Saving for a home?", selected: false },
@@ -148,6 +149,27 @@ export default function ChatPage() {
         return () => clearTimeout(timer)
     }, [])
 
+    // Auto-scroll to bottom when messages change
+    useEffect(() => {
+        const scrollToBottom = () => {
+            if (chatContainerRef.current) {
+                const container = chatContainerRef.current
+                container.scrollTop = container.scrollHeight
+            }
+        }
+
+        // Use requestAnimationFrame for better timing
+        requestAnimationFrame(() => {
+            scrollToBottom()
+
+            // Also scroll after animations complete
+            setTimeout(scrollToBottom, 300)
+
+            // And one more time after a longer delay to catch any late rendering
+            setTimeout(scrollToBottom, 600)
+        })
+    }, [messages])
+
     const handleTopicSelect = (topicId: string) => {
         setSelectedTopics((prev) =>
             prev.map((topic) => (topic.id === topicId ? { ...topic, selected: !topic.selected } : topic)),
@@ -188,7 +210,6 @@ export default function ChatPage() {
     return (
         <div className="min-h-screen bg-white flex flex-col">
             {/* Header */}
-            {/* Header */}
             <header className="sticky top-0 bg-white md:left-6 left-2 px-4 py-4 flex justify-between items-center z-10 border-b border-gray-100">
                 <Link href="/" className="flex items-center gap-6">
                     <HugeiconsIcon icon={Menu02Icon} className="w-5 h-5" />
@@ -197,7 +218,7 @@ export default function ChatPage() {
             </header>
 
             {/* Chat Container */}
-            <div className="flex-1 px-4 pt-6 pb-16 space-y-6 max-w-2xl mx-auto overflow-y-auto">
+            <div className="flex-1 px-4 pt-6 pb-16 space-y-6 max-w-2xl mx-auto overflow-y-auto scroll-smooth" ref={chatContainerRef}>
                 <AnimatePresence>
                     {messages.map((message, index) => (
                         <motion.div
