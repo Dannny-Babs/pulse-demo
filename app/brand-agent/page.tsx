@@ -2,14 +2,12 @@
 
 import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
-import { useRouter } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { Menu02Icon, MicIcon, MicOffIcon, VolumeHighIcon, VolumeOffIcon, SentIcon, VideoOffIcon, PhoneOffIcon, MoreVerticalIcon, AudioWave01Icon, ArrowLeftIcon, Message01Icon } from "@hugeicons/core-free-icons"
+import { MicIcon, SentIcon, AudioWave01Icon, ArrowLeftIcon } from "@hugeicons/core-free-icons"
 import { motion, AnimatePresence } from "framer-motion"
 import { useBrandData } from "@/lib/hooks/useBrandData"
-import { ChatInput } from "@/components/chat-input"
 
 interface Message {
     id: string
@@ -28,7 +26,6 @@ interface AgentPersona {
 }
 
 export default function BrandAgentPage() {
-    const router = useRouter()
     const { companyName } = useBrandData()
 
     // Agent persona - updated to match the screenshot
@@ -43,7 +40,6 @@ export default function BrandAgentPage() {
     const [messages, setMessages] = useState<Message[]>([])
     const [inputMessage, setInputMessage] = useState("")
     const [isListening, setIsListening] = useState(false)
-    const [showPrivacyBar, setShowPrivacyBar] = useState(true)
 
     // Refs
     const bottomRef = useRef<HTMLDivElement>(null)
@@ -60,6 +56,19 @@ export default function BrandAgentPage() {
             },
             {
                 id: "2",
+                type: "agent",
+                content: "That's a huge step! I've talked to so many people who feel exactly the same way. What's making you feel not quite ready?",
+                timestamp: new Date()
+            },
+            {
+                id: "3",
+                type: "participant",
+                content: "The interest rates are too high, I'm waiting for them to drop below 5% ",
+                timestamp: new Date(),
+                isAudio: true
+            },
+            {
+                id: "4",
                 type: "agent",
                 content: "That's a huge step! I've talked to so many people who feel exactly the same way. What's making you feel not quite ready?",
                 timestamp: new Date()
@@ -303,43 +312,14 @@ export default function BrandAgentPage() {
                         transition={{ delay: 0.5, duration: 0.6 }}
                         className="mt-6 p-4 bg-gray-50 rounded-xl border border-gray-200"
                     >
-                        <p className="text-sm text-gray-600 mb-3">Try asking about:</p>
-                        <div className="flex flex-wrap gap-2">
-                            {[
-                                "How do I start building credit?",
-                                "What's a realistic timeline for buying a home?",
-                                "How much should I save each month?",
-                                "What are the biggest mistakes to avoid?"
-                            ].map((suggestion, index) => (
-                                <button
-                                    key={index}
-                                    onClick={() => {
-                                        setInputMessage(suggestion)
-                                        // Simulate sending the message
-                                        const participantMessage: Message = {
-                                            id: Date.now().toString(),
-                                            type: "participant",
-                                            content: suggestion,
-                                            timestamp: new Date(),
-                                        }
-                                        setMessages(prev => [...prev, participantMessage])
-
-                                        // Generate AI response
-                                        setTimeout(() => {
-                                            const aiResponse: Message = {
-                                                id: (Date.now() + 1).toString(),
-                                                type: "agent",
-                                                content: generateAIResponse(suggestion),
-                                                timestamp: new Date(),
-                                            }
-                                            setMessages(prev => [...prev, aiResponse])
-                                        }, 1000)
-                                    }}
-                                    className="px-3 py-2 text-sm bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-colors"
-                                >
-                                    {suggestion}
-                                </button>
-                            ))}
+                        <div className="flex items-start gap-3">
+                            <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
+                                <span className="text-xs font-medium text-gray-600">A</span>
+                            </div>
+                            <div className="flex-1">
+                                <p className="text-sm text-gray-600 mb-1">Anonymous Member</p>
+                                <p className="text-sm text-gray-900">&ldquo;The interest rates are too high, I&apos;m waiting for them to drop below 5%&rdquo;</p>
+                            </div>
                         </div>
                     </motion.div>
                 )}

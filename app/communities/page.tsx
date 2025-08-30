@@ -431,7 +431,7 @@ export default function CommunitiesPage() {
                                             ({pillarGroups.length} groups)</span>
                                     </div>
                                     <p className="text-gray-500 text-sm ">
-                                        See More
+                                        Join All
                                     </p>
 
                                 </div>
@@ -554,6 +554,16 @@ export default function CommunitiesPage() {
                                                                 ))}
                                                             </div>
                                                         </div>
+
+                                                        {/* Join Button */}
+                                                        <div className="mt-4">
+                                                            <Button
+                                                                className="w-full bg-[#6941C6] hover:bg-[#56477b] text-white py-2 text-sm"
+                                                                onClick={() => router.push('/pricing')}
+                                                            >
+                                                                Join Here
+                                                            </Button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </motion.div>
@@ -561,18 +571,6 @@ export default function CommunitiesPage() {
                                     </AnimatePresence>
                                 </div>
 
-                                {/* Join All Communities in this Pillar */}
-                                <div className="mt-6 text-center">
-                                    <Button
-                                        className="bg-[#1b0f38] hover:bg-[#56477b] text-white px-8 py-3 text-lg"
-                                        onClick={() => router.push('/pricing')}
-                                    >
-                                        Join All {pillar} Communities
-                                    </Button>
-                                    <p className="text-sm text-gray-500 mt-2">
-                                        Join {pillarGroups.length} communities focused on {pillar.toLowerCase()}
-                                    </p>
-                                </div>
                             </motion.div>
                         )
                     })}
