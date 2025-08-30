@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { Menu02Icon, CalendarIcon, AutoConversationsIcon, UserGroupIcon } from '@hugeicons/core-free-icons'
+import { Menu02Icon, CalendarIcon, AutoConversationsIcon, UserGroupIcon, AiPhoneIcon } from '@hugeicons/core-free-icons'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -244,13 +244,17 @@ export default function DashboardPage() {
                             <div className="p-3 bg-white border border-gray-200 shadow-none rounded-xl">
                                 <h2 className="text-xl font-semibold text-gray-900 mb-6">Quick Actions</h2>
                                 <div className="space-y-3">
-                                    <Button variant="default" className="w-full justify-start bg-slate-900">
+                                    <Button variant="default" className="w-full justify-start bg-slate-900" onClick={() => router.push('/dashboard/insights')} >
                                         <HugeiconsIcon icon={AutoConversationsIcon} className="w-4 h-4 mr-2" />
                                         View Insights by Cohort
                                     </Button>
-                                    <Button variant="outline" className="w-full justify-start" onClick={() => router.push('/dashboard/communities')}   >
+                                    <Button variant="outline" className="w-full justify-start" onClick={() => router.push('/communities')}   >
                                         <HugeiconsIcon icon={UserGroupIcon} className="w-4 h-4 mr-2" />
                                         Browse Communities
+                                    </Button>
+                                    <Button variant="outline" className="w-full justify-start" onClick={() => router.push('/brand-agent')}   >  
+                                            <HugeiconsIcon icon={AiPhoneIcon} className="w-4 h-4 mr-2" />
+                                        Brand Agent
                                     </Button>
 
                                 </div>
