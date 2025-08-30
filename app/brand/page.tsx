@@ -21,15 +21,15 @@ export default function BrandPage() {
     // Profile form state
     const [profileData, setProfileData] = useState({
         name: "Molly Hill",
-        company: "Bank of America",
+        company: "Acme Bank",
         role: "Brand Director",
         department: "Marketing",
     });
 
     // Brand cortex form state
     const [brandData, setBrandData] = useState({
-        website: "bankofamerica.com",
-        socialLinks: "linkedin.com/company/bankofamerica",
+        website: "acmebank.com",
+        socialLinks: "linkedin.com/company/acmebank",
         brandGuidelines: null
     });
 
