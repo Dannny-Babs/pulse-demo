@@ -32,7 +32,6 @@ interface RecentActivity {
 
 export default function DashboardPage() {
     const router = useRouter()
-    const { companyName } = useBrandData()
     const upcomingSessions: UpcomingSession[] = [
         {
             id: '1',
@@ -91,7 +90,7 @@ export default function DashboardPage() {
             <header className="sticky top-0 bg-white border-b border-gray-200 px-4 py-4 flex justify-between items-center z-10">
                 <Link href="/" className="flex items-center gap-6">
                     <HugeiconsIcon icon={Menu02Icon} className="w-5 h-5" />
-                    <Image src="/Logo.svg" alt="Swiirl Pulse" width={60} height={60} />
+                    <Image src="/Logo.svg" alt="Swiirl Pulse" width={60} height={60} priority />
                 </Link>
             </header>
 

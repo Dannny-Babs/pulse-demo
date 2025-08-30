@@ -31,7 +31,7 @@ export default function InsightsPage() {
                         <span className="text-sm"> Dashboard</span>
                     </Link>
                     <div className="w-px h-6 bg-gray-300"></div>
-                    <Image src="/Logo.svg" alt="Swiirl Pulse" width={60} height={60} />
+                    <Image src="/Logo.svg" alt="Swiirl Pulse" width={60} height={60} priority />
                 </div>
             </header>
 

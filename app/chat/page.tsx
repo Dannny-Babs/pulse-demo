@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
@@ -55,14 +55,14 @@ export default function ChatPage() {
     const [topicContinueClicked, setTopicContinueClicked] = useState(false)
     const [marketContinueClicked, setMarketContinueClicked] = useState(false)
 
-    const conversationScript = [
+    const conversationScript = useMemo(() => [
         { type: "swiirl", content: `Welcome! I'll help ${companyName || 'your brand'} join real community conversations.\n\nTo start, what would you like to learn more about?` },
         {
             type: "brand",
             content:
                 "We'd like to better understand how people in different communities think about building their financial future.",
         },
-        
+
         { type: "swiirl", content: "Great.\n\n When you say financial future, are you most interested in…", showTopics: true },
         {
             type: "brand",
@@ -77,7 +77,7 @@ export default function ChatPage() {
         { type: "swiirl", content: "Great.\n\n \t\t Just to confirm, your agent will follow these ground rules.", showGuardrails: true },
         { type: "brand", content: "Yes, confirm.", hideGuardrails: true },
         { type: "swiirl", content: "Here's your Focus Brief. Feel free to ask me follow-up questions or request changes.", showFocusBrief: true },
-    ]
+    ], [companyName])
 
     const addMessage = (type: "swiirl" | "brand", content: string, delay = 0) => {
         setTimeout(() => {
@@ -139,7 +139,7 @@ export default function ChatPage() {
 
             addMessage(bubble.type as "swiirl" | "brand", bubble.content, 200)
         }
-    }, [currentBubble, waitingForTopicSelection, waitingForMarketSelection])
+    }, [currentBubble, waitingForTopicSelection, waitingForMarketSelection, conversationScript])
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -192,7 +192,7 @@ export default function ChatPage() {
             <header className="sticky top-0 bg-white md:left-6 left-2 px-4 py-4 flex justify-between items-center z-10 border-b border-gray-100">
                 <Link href="/" className="flex items-center gap-6">
                     <HugeiconsIcon icon={Menu02Icon} className="w-5 h-5" />
-                    <Image src="/logo.svg" alt="Swiirl Pulse" width={60} height={60} />
+                    <Image src="/logo.svg" alt="Swiirl Pulse" width={60} height={60} priority />
                 </Link>
             </header>
 
@@ -442,7 +442,7 @@ export default function ChatPage() {
                                         <Button
                                             onClick={handleSeeCommunities}
                                             className="w-full text-white py-3"
-                                           
+
                                         >
                                             See 186 Groups →
                                         </Button>

@@ -109,7 +109,7 @@ export default function BrandPage() {
             <header className="sticky top-0 bg-white md:left-6 left-2 px-4 py-4 flex justify-between items-center z-10 border-b border-gray-100">
                 <Link href="/" className="flex items-center gap-6">
                     <HugeiconsIcon icon={Menu02Icon} className="w-5 h-5" />
-                    <Image src="/logo.svg" alt="Swiirl Pulse" width={60} height={60} />
+                    <Image src="/logo.svg" alt="Swiirl Pulse" width={60} height={60} priority />
                 </Link>
             </header>
 

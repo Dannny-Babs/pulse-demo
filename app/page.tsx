@@ -56,7 +56,7 @@ export default function Home() {
       </Button>
 
       <form onSubmit={handleSubmit} className="text-left md:w-1/3 w-full px-9">
-        <Image src="/logo.svg" alt="Swiirl Pulse" width={75} height={75} />
+        <Image src="/logo.svg" alt="Swiirl Pulse" width={75} height={75} priority />
         <h1 className="text-3xl font-semibold text-gray-900 mt-16 md:mt-12 ">
           Welcome to Swiirl
         </h1>

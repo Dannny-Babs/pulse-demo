@@ -47,7 +47,7 @@ Swiirl Connect is an innovative platform that bridges the gap between consumers 
 
 ## Project Structure
 
-```
+```b
 ├── app/
 │   ├── page.tsx          # Onboarding flow (welcome, signup, brand context)
 │   ├── chat/page.tsx     # Main chat interface
