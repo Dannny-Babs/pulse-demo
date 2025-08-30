@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { Tick01Icon, ArrowUp01Icon, ArrowDown01Icon, Menu02Icon } from '@hugeicons/core-free-icons'
+import { Tick01Icon, Menu02Icon } from '@hugeicons/core-free-icons'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'

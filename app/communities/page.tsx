@@ -308,7 +308,7 @@ export default function CommunitiesPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ type: "spring", stiffness: 200, damping: 25 }}
                 >
-                    <h1 className="text-3xl font-bold text-[#101828] mb-3">
+                    <h1 className="text-3xl font-semibold text-[#101828] mb-3">
                         Community Groups for {companyName || 'Your Brand'}
                     </h1>
                     <p className="text-gray-600 text-lg max-w-2xl mx-auto">

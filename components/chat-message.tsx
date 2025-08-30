@@ -9,7 +9,7 @@ interface ChatMessageProps {
     isTyping?: boolean
 }
 
-export function ChatMessage({ id, type, content, isTyping }: ChatMessageProps) {
+export function ChatMessage({  type, content, isTyping }: ChatMessageProps) {
     const isUser = type === "brand"
     const isAssistant = type === "swiirl"
 

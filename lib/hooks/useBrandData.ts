@@ -8,22 +8,23 @@ interface BrandData {
 }
 
 export function useBrandData() {
-  const [brandData, setBrandData] = useState<BrandData>({
-    companyName: "",
-    fileCount: 0,
-  });
-
-  // Load from localStorage on mount
-  useEffect(() => {
-    const saved = localStorage.getItem("brandData");
-    if (saved) {
-      try {
-        setBrandData(JSON.parse(saved));
-      } catch (e) {
-        console.warn("Failed to parse brand data from localStorage");
+  // Initialize state with localStorage data if available
+  const [brandData, setBrandData] = useState<BrandData>(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("brandData");
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          return parsed;
+        } catch (e) {
+          console.warn("Failed to parse brand data from localStorage");
+        }
       }
     }
-  }, []);
+    return { companyName: "", fileCount: 0 };
+  });
+
+  // No need to load from localStorage on mount since we do it in initial state
 
   // Save to localStorage whenever data changes
   useEffect(() => {

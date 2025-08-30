@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { Menu02Icon, ArrowLeftIcon, InLoveIcon, QuestionIcon, UserQuestion01Icon, MessageCancel01Icon, Tick01Icon } from '@hugeicons/core-free-icons'
+import { ArrowLeftIcon, InLoveIcon, QuestionIcon, UserQuestion01Icon, MessageCancel01Icon, Tick01Icon } from '@hugeicons/core-free-icons'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useBrandData } from '@/lib/hooks/useBrandData'
@@ -93,7 +93,9 @@ export default function InsightsPage() {
                     <div className="p-4 bg-white border border-gray-200 shadow-none rounded-xl">
                         {/* Header */}
                         <div className="mb-8">
-                            <h1 className="text-3xl font-semibold text-gray-900 mb-2">{companyName || ''} Financial progress</h1>
+                            <h1 className="text-3xl font-semibold text-gray-900 mb-2">
+                                {companyName ? `${companyName} Financial progress` : 'Financial progress'}
+                            </h1>
                             <p className="text-gray-600 ">Report for ATL, Jul 01 - 31</p>
                         </div>
 

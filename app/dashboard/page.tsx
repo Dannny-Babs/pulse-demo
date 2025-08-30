@@ -4,10 +4,11 @@ import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { Menu02Icon, UserIcon, CalendarIcon, AutoConversationsIcon, EyeIcon, SearchIcon, UserGroupIcon } from '@hugeicons/core-free-icons'
+import { Menu02Icon, CalendarIcon, AutoConversationsIcon, UserGroupIcon } from '@hugeicons/core-free-icons'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { useBrandData } from '@/lib/hooks/useBrandData'
 
 interface UpcomingSession {
     id: string
@@ -31,6 +32,7 @@ interface RecentActivity {
 
 export default function DashboardPage() {
     const router = useRouter()
+    const { companyName } = useBrandData()
     const upcomingSessions: UpcomingSession[] = [
         {
             id: '1',
@@ -101,7 +103,9 @@ export default function DashboardPage() {
                     transition={{ duration: 0.6, ease: "easeOut" }}
                     className="mb-8"
                 >
-                    <h1 className="md:text-3xl text-2xl font-medium text-gray-900 tracking-tight mb-1">Welcome Back!</h1>
+                    <h1 className="md:text-3xl text-2xl font-medium text-gray-900 tracking-tight mb-1">
+                        Welcome Back!
+                    </h1>
                     <p className="text-gray-600 text-base">Here&apos;s what&apos;s happening with your communities</p>
                 </motion.div>
 

@@ -62,6 +62,7 @@ export default function ChatPage() {
             content:
                 "We'd like to better understand how people in different communities think about building their financial future.",
         },
+        
         { type: "swiirl", content: "Great.\n\n When you say financial future, are you most interested in…", showTopics: true },
         {
             type: "brand",
