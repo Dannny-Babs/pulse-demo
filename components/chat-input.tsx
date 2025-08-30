@@ -43,17 +43,17 @@ export function ChatInput({ onSendMessage, disabled = false }: ChatInputProps) {
     }
 
     return (
-        <div className="sticky bottom-0 flex gap-2 px-4 pb-4 mx-auto w-full bg-background md:pb-6 md:max-w-3xl z-[1] border-t-0">
+        <div className="sticky bottom-0 flex gap-2 px-4 pb-4 mx-auto w-full bg-background md:pb-6 md:max-w-2xl z-[1] border-t-0">
             <div className="flex relative flex-col gap-4 w-full">
                 <form className="w-full overflow-hidden rounded-xl bg-background border-[1.5px] border-gray-200 shadow-xs transition-all duration-200 shadow-black/5 hover:border-primary/20 focus-within:border-primary/10 focus-within:shadow focus-within:shadow-primary/10">
                     <textarea
                         ref={textareaRef}
-                        className="flex min-h-[80px] border border-input ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm w-full rounded-none border-none p-3  outline-none ring-0 field-sizing-fixed bg-transparent dark:bg-transparent focus-visible:ring-0 text-sm resize-none py-1 px-3 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+                        className="flex min-h-[60px] border border-input ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm w-full rounded-none border-none p-3  outline-none ring-0 field-sizing-fixed bg-transparent dark:bg-transparent focus-visible:ring-0 text-sm resize-none py-1 px-3 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
                         name="message"
                         placeholder="Send a message..."
                         data-testid="multimodal-input"
                         rows={1}
-                        style={{ height: '80px', minHeight: '80px', maxHeight: '200px' }}
+                        style={{ height: '60px', minHeight: '60px', maxHeight: '200px' }}
                         value={inputMessage}
                         onChange={handleInputChange}
                         onKeyPress={handleKeyPress}

@@ -10,12 +10,13 @@ import { useRouter } from "next/navigation";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Menu02Icon } from "@hugeicons/core-free-icons";
 import { FileUpload } from "@/components/file-upload";
-
+import { useBrandData } from "@/lib/hooks/useBrandData";
 
 
 export default function BrandPage() {
     const [currentStep, setCurrentStep] = useState(1);
     const router = useRouter();
+    const { setCompanyName, setFileCount } = useBrandData();
 
     // Profile form state
     const [profileData, setProfileData] = useState({
@@ -41,6 +42,10 @@ export default function BrandPage() {
         setIsSubmitting(true);
 
         try {
+            // Save company name to the hook
+            setCompanyName(profileData.company);
+            setFileCount(0); // Reset file count
+
             await new Promise(resolve => setTimeout(resolve, 1000));
 
             toast.success("Profile information saved!");
@@ -298,6 +303,7 @@ export default function BrandPage() {
                                 maxFileSize={10}
                                 onFilesChange={(files) => {
                                     console.log("Files uploaded:", files);
+                                    setFileCount(files.length); // Track file count using the hook
                                     // Handle the uploaded files here
                                 }}
                             />

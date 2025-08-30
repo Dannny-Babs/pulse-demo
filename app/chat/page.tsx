@@ -9,6 +9,7 @@ import { ChatInput } from "@/components/chat-input"
 import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Menu02Icon } from "@hugeicons/core-free-icons";
+import { useBrandData } from "@/lib/hooks/useBrandData";
 
 
 interface Message {
@@ -26,6 +27,7 @@ interface ChipOption {
 
 export default function ChatPage() {
     const router = useRouter()
+    const { companyName, fileCount } = useBrandData()
     const [messages, setMessages] = useState<Message[]>([])
     const [currentBubble, setCurrentBubble] = useState(0)
     const [isTyping, setIsTyping] = useState(false)
@@ -56,36 +58,25 @@ export default function ChatPage() {
     const [guardrailContinueClicked, setGuardrailContinueClicked] = useState(false)
 
     const conversationScript = [
-        { type: "swiirl", content: "Welcome 👋." },
-        { type: "swiirl", content: "I'll help your brand join real community conversations." },
-        { type: "swiirl", content: "To start, what would you like to learn more about?" },
+        { type: "swiirl", content: `Welcome! I'll help ${companyName || 'your brand'} join real community conversations.\n\nTo start, what would you like to learn more about?` },
         {
             type: "brand",
             content:
                 "We'd like to better understand how people in different communities think about building their financial future.",
         },
-        { type: "swiirl", content: "Great." },
-        { type: "swiirl", content: "When you say financial future, are you most interested in…", showTopics: true },
+        { type: "swiirl", content: "Great.\n\n When you say financial future, are you most interested in…", showTopics: true },
         {
             type: "brand",
             content: "Let's go with building credit, saving for a home, and everyday budgeting.",
             hideTopics: true,
         },
-        { type: "swiirl", content: "Got it." },
-        { type: "swiirl", content: "And where would you like to focus first?", showMarkets: true },
+        { type: "swiirl", content: "Got it.\n\n And where would you like to focus first?", showMarkets: true },
         { type: "brand", content: "Atlanta, Phoenix, and San Antonio.", hideMarkets: true },
-        { type: "swiirl", content: "Perfect." },
-        { type: "swiirl", content: "And what does success look like for you after these conversations?" },
-        { type: "brand", content: "We want to see how people in different communities set their financial priorities." },
-        { type: "brand", content: "We want to compare those with our current offerings." },
-        {
-            type: "brand",
-            content: "And we want insights to help us design a campaign that connects with what they care about most.",
-        },
-        { type: "swiirl", content: "Great." },
-        { type: "swiirl", content: "Just to confirm, your agent will follow these ground rules.", showGuardrails: true },
+        { type: "swiirl", content: "Perfect.\n\n And what does success look like for you after these conversations?" },
+        { type: "brand", content: "We want to see how people in different communities set their financial priorities.\n\n We want to compare those with our current offerings.\n\n And we want insights to help us design a campaign that connects with what they care about most." },
+        { type: "swiirl", content: "Great.\n\n \t\t Just to confirm, your agent will follow these ground rules.", showGuardrails: true },
         { type: "brand", content: "Yes, confirm.", hideGuardrails: true },
-        { type: "swiirl", content: "Here's your Focus Brief.", showFocusBrief: true },
+        { type: "swiirl", content: "Here's your Focus Brief. Feel free to ask me follow-up questions or request changes.", showFocusBrief: true },
     ]
 
     const addMessage = (type: "swiirl" | "brand", content: string, delay = 0) => {
@@ -284,12 +275,8 @@ export default function ChatPage() {
                                         <div className="flex justify-end mt-8 pr-4">
                                             <Button
                                                 onClick={continueAfterTopics}
-                                                className={`px-6 py-2 rounded-full transition-all text-[#101828]`}
-                                                style={{
-                                                    fontFamily: "Inter",
-                                                    fontWeight: "400",
-                                                    backgroundColor: "#F9FAFB",
-                                                }}
+                                                className={`px-6 py-2 rounded-lg transition-all bg-gray-100 border border-gray-200 shadow-none text-[#101828] hover:bg-gray-200 hover:border-gray-300 hover:text-gray-500 focus:text-white`}
+
                                             >
                                                 Continue
                                             </Button>
@@ -307,13 +294,8 @@ export default function ChatPage() {
                                             <button
                                                 key={market.id}
                                                 onClick={() => handleMarketSelect(market.id)}
-                                                className={`px-4 py-2 rounded-full text-sm transition-all text-[#101828] ${market.selected ? "" : "hover:bg-[#D6BBFB]"
+                                                className={`px-4 py-1 rounded-full text-sm transition-all ${market.selected ? "text-white bg-[#6941C6] hover:bg-[#56477b]" : "text-[#6941C6] hover:bg-[#D6BBFB] bg-[#F9F5FF] border border-purple-300"
                                                     }`}
-                                                style={{
-                                                    fontFamily: "Inter",
-                                                    fontWeight: "400",
-                                                    backgroundColor: market.selected ? "#D6BBFB" : "#E9D7FE",
-                                                }}
                                                 disabled={marketContinueClicked}
                                             >
                                                 {market.label}
@@ -324,12 +306,7 @@ export default function ChatPage() {
                                         <div className="flex justify-end mt-8 pr-4">
                                             <Button
                                                 onClick={continueAfterMarkets}
-                                                className={`px-6 py-2 rounded-full transition-all text-[#101828]`}
-                                                style={{
-                                                    fontFamily: "Inter",
-                                                    fontWeight: "400",
-                                                    backgroundColor: "#F9FAFB",
-                                                }}
+                                                className={"px-6 py-2 rounded-lg transition-all bg-gray-100 border border-gray-200 shadow-none text-[#101828] hover:bg-gray-200 hover:border-gray-300 hover:text-gray-500 focus:text-white"}
                                             >
                                                 Continue
                                             </Button>
@@ -340,8 +317,8 @@ export default function ChatPage() {
 
                         {/* Guardrails */}
                         {message.content.includes("ground rules") && showGuardrails && (
-                            <div className="mt-4 space-y-4 fade-in-up">
-                                <div className="space-y-3 text-sm" style={{ fontFamily: "Inter", fontWeight: "400" }}>
+                            <div className="mt-4 space-y-3  fade-in-up">
+                                <div className="space-y-3 text-sm max-w-[80%]">
                                     <div className="p-3 bg-gray-50 rounded-lg">
                                         No personal financial advice — only general information.
                                     </div>
@@ -353,12 +330,8 @@ export default function ChatPage() {
                                 <div className="flex justify-end mt-8 pr-4">
                                     <Button
                                         onClick={continueAfterGuardrails}
-                                        className={`px-6 py-2 rounded-full transition-all text-[#101828]`}
-                                        style={{
-                                            fontFamily: "Inter",
-                                            fontWeight: "400",
-                                            backgroundColor: guardrailContinueClicked ? "#8C8C8C" : "#F9FAFB",
-                                        }}
+                                        className={"px-6 py-2 rounded-lg transition-all bg-gray-100 border border-gray-200 shadow-none text-[#101828] hover:bg-gray-200 hover:border-gray-300 hover:text-gray-500 focus:text-white"}
+
                                     >
                                         Agree and Continue
                                     </Button>
@@ -369,30 +342,33 @@ export default function ChatPage() {
                         {/* Focus Brief */}
                         {message.content.includes("Here's your Focus Brief") && showFocusBrief && (
                             <div className="mt-4 bg-white border border-gray-200 rounded-lg p-6 shadow-sm space-y-4 fade-in-up">
-                                <h3 className="text-lg" style={{ fontFamily: "Inter", fontWeight: "300", color: "#101828" }}>
-                                    Focus Brief
+                                <h3 className="text-2xl font-semibold" >
+                                    Focus Brief for {companyName || 'Your Brand'} Campaign Design
                                 </h3>
-                                <div className="space-y-3 text-sm" style={{ fontFamily: "Inter", fontWeight: "300", color: "#101828" }}>
-                                    <div>
+                                <div className="space-y-3 text-sm font-normal" >
+                                    <div className="pb-4 border-b border-gray-200">
                                         <strong>Topic:</strong> Financial Progress
                                     </div>
-                                    <div>
+                                    <div className="pb-4 border-b border-gray-200">
                                         <strong>Pillars:</strong> Credit building, Home savings, Budgeting
                                     </div>
-                                    <div>
+                                    <div className="pb-4 border-b border-gray-200"      >
                                         <strong>Markets:</strong> Atlanta, Phoenix, San Antonio
                                     </div>
-                                    <div>
+                                    <div className="pb-4 border-b border-gray-200">
                                         <strong>Goals:</strong> Understand community priorities and shape a relevant campaign
                                     </div>
-                                    <div>
+                                    <div className="pb-4 border-b border-gray-200">
                                         <strong>Safety:</strong> No personal advice, plain language, consent-only conversations
                                     </div>
-                                    <div>
+                                    <div className="pb-4 border-b border-gray-200">
                                         <strong>Value to Communities:</strong> Micro-grants + coaching hours
                                     </div>
-                                    <div>
+                                    <div className="pb-4 border-b border-gray-200">
                                         <strong>Budget:</strong> $50,000
+                                    </div>
+                                    <div className="pb-4 border-b border-gray-200">
+                                        <strong>Files Uploaded:</strong> {fileCount} document{fileCount !== 1 ? 's' : ''}
                                     </div>
                                 </div>
                                 <Button
