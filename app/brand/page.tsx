@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { toast } from "sonner";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Menu02Icon } from "@hugeicons/core-free-icons";
 import { FileUpload } from "@/components/file-upload";
@@ -14,6 +15,7 @@ import { FileUpload } from "@/components/file-upload";
 
 export default function BrandPage() {
     const [currentStep, setCurrentStep] = useState(1);
+    const router = useRouter();
 
     // Profile form state
     const [profileData, setProfileData] = useState({
@@ -57,7 +59,7 @@ export default function BrandPage() {
         try {
             await new Promise(resolve => setTimeout(resolve, 1000));
             toast.success("Brand information submitted successfully!");
-            // You can route to next page or show completion message here
+            router.push("/chat");
         } catch {
             toast.error("Something went wrong. Please try again.");
         } finally {
