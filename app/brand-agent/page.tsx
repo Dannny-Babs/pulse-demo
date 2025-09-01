@@ -67,12 +67,13 @@ export default function BrandAgentPage() {
                 timestamp: new Date(),
                 isAudio: true
             },
-            {
-                id: "4",
-                type: "agent",
-                content: "That's a huge step! I've talked to so many people who feel exactly the same way. What's making you feel not quite ready?",
-                timestamp: new Date()
-            }
+           {
+      id: "4",
+      type: "agent",
+      content:
+        "Totally fair, and I hear that a lot. While you wait, we can compare payments at today’s rate vs. 5% so you see the real monthly difference, and check first-time buyer programs or temporary buydowns that could bridge the gap. Do you have a rough price range or down payment in mind?",
+      timestamp: new Date()
+    }
         ]
         setMessages(sampleMessages)
     }, [])
